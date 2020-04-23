@@ -5,6 +5,7 @@ import AddHabit from "./AddHabit";
 import Loading from "./Loading";
 import Error from "./Error";
 import Habit from "./Habit";
+import { useAuth0 } from "./utils/auth";
 
 export const HABITS_QUERY = gql`
   query HABITS_QUERY {
@@ -24,8 +25,15 @@ export const HABITS_QUERY = gql`
 
 function App() {
   const { data, loading, error } = useQuery(HABITS_QUERY);
+  const {
+    isAuthenticated,
+    loading: authLoading,
+    loginWithRedirect,
+    user,
+    logout,
+  } = useAuth0();
 
-  if (loading) {
+  if (loading || authLoading) {
     return <Loading />;
   }
 
@@ -42,9 +50,27 @@ function App() {
             💪
           </span>
         </h2>
+        {!isAuthenticated && (
+          <button type="button" onClick={loginWithRedirect}>
+            Log In
+          </button>
+        )}
       </div>
       <div style={{ marginBottom: "10px" }}>
-        <AddHabit />
+        {isAuthenticated && (
+          <>
+            Welcome, {user.name}
+            <span role="img" aria-label="muscle emoji">
+              👋
+            </span>
+            !
+            <button onClick={logout} type="button" style={{ fontSize: "12px" }}>
+              Log Out
+            </button>
+            <br />
+            <AddHabit />
+          </>
+        )}
       </div>
       <ul style={{ margin: "10px", paddingInlineStart: "15px" }}>
         {data.habits.map((habit) => {

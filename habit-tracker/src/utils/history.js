@@ -1,1 +1,3 @@
-// replace me!
+import { createBrowserHistory } from "history";
+
+export default createBrowserHistory();

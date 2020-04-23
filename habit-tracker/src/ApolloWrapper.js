@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,13 +6,11 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/link-context";
 import { useAuth0 } from "./utils/auth";
+import React, { useState, useEffect } from "react";
 
 function ApolloWrapper({ children }) {
   const { isAuthenticated, getTokenSilently } = useAuth0();
   const [bearerToken, setBearerToken] = useState("");
-  const httpLink = new HttpLink({
-    uri: "http://localhost:4000",
-  });
 
   useEffect(() => {
     const getToken = async () => {
@@ -23,10 +20,15 @@ function ApolloWrapper({ children }) {
     getToken();
   }, [getTokenSilently, isAuthenticated]);
 
-  const authLink = setContext((_, { headers }) => {
-    if (!bearerToken) return { headers };
+  const httpLink = new HttpLink({
+    uri: "http://localhost:4000",
+  });
+
+  const authLink = setContext((_, { headers, ...rest }) => {
+    if (!bearerToken) return { headers, ...rest };
 
     return {
+      ...rest,
       headers: {
         ...headers,
         authorization: `Bearer: ${bearerToken}`,
