@@ -1,4 +1,10 @@
-# Habit Tracker: Apollo + Auth0
-This is another iteration of my Habit Tracker app, this time adding in Auth0 to protect certain resolvers.
+# Apollo + Auth0 Streaming Sample
+This is the app that [Kurt Kemple](https://twitter.com/kurtkemple) and [Sam Julien](https://twitter.com/samjulien) are working on for joint streams.
 
-Note: This isn't an official Auth0 implementation; it's a sandbox for my own education. Use at your own risk!
+Twitch links:
+- [Kurt's personal](https://www.twitch.tv/theworstdev)
+- [Sam's personal](https://www.twitch.tv/samjulien)
+- [Auth0](https://www.twitch.tv/auth0)
+- [Apollo](https://www.twitch.tv/apollographql)
+
+This repo only reflects what we do on camera. The reference app [lives here](https://github.com/samjulien/apollo-auth0-fullstack).
